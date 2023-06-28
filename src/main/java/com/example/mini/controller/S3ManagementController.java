@@ -17,7 +17,6 @@ public class S3ManagementController {
     @Autowired
     private S3Service s3Service;
 
-
     @PostMapping("/upload")
     public ResponseEntity<Object> upload() {
         s3Service.upload();
@@ -27,6 +26,12 @@ public class S3ManagementController {
     @GetMapping("/list")
     public ResponseEntity<Object> getList() {
         s3Service.list();
+        return new ResponseEntity<>("success", HttpStatus.OK);
+    }
+
+    @GetMapping("/list-folder")
+    public ResponseEntity<Object> getListFolder() {
+        s3Service.listFolder();
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
 
@@ -41,5 +46,6 @@ public class S3ManagementController {
         s3Service.delete();
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
+
 
 }

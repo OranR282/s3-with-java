@@ -24,11 +24,11 @@ public class S3Service {
     public void upload(){
         PutObjectRequest request = PutObjectRequest.builder()
                 .bucket(s3Configuration.getS3BucketName())
-                .key("hello.txt")
+                .key("grap_20230727/nihao.txt")
                 .build();
 
         s3Client.putObject(request,
-                RequestBody.fromFile(new File("/Users/5360550/Documents/hello.txt"))
+                RequestBody.fromFile(new File("/Users/XXX/Documents/hello.txt"))
         );
     }
 
@@ -43,10 +43,22 @@ public class S3Service {
         }
     }
 
+    public void listFolder(){
+        ListObjectsRequest request = ListObjectsRequest.builder()
+                .prefix("report_20230728")
+                .bucket(s3Configuration.getS3BucketName())
+                .build();
+
+        ListObjectsResponse listObjectsResponse = s3Client.listObjects(request);
+        for(S3Object object : listObjectsResponse.contents()) {
+            System.out.println("file in folder : " + object.key());
+        }
+    }
+
     public void download(){
         GetObjectRequest request = GetObjectRequest.builder()
                 .bucket(s3Configuration.getS3BucketName())
-                .key("hello.txt")
+                .key("report_20230728/hello2.txt")
                 .build();
         ResponseInputStream<GetObjectResponse> object = s3Client.getObject(request);
 
@@ -61,7 +73,7 @@ public class S3Service {
     public void delete(){
         DeleteObjectRequest request = DeleteObjectRequest.builder()
                 .bucket(s3Configuration.getS3BucketName())
-                .key("hello.txt")
+                .key("report_20230728/hello2.txt")
                 .build();
         s3Client.deleteObject(request);
 
